@@ -1,2 +1,2 @@
 # Project-ScoobyDoo
-Project for our Introduction to Computer Science II
+This project is aconsole-based Java application named “Inventory Management System” that helps a store manager maintain and monitor product information efficiently.
