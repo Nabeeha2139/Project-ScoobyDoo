@@ -1,10 +1,12 @@
 public class Product {
 
+    //These are the attributes of the product class
     private String id;
     private String name;
     private double price;
     private int quantity;
- 
+
+    //This is the Parameterized Constructor for Product class
     public Product(String id, String name, double price, int quantity){
 
         this.id = id;
@@ -14,6 +16,7 @@ public class Product {
 
     }
 
+    //These are the getters and the setters (for the private attributes)
     public String getId(){
         return this.id;
     }
@@ -40,6 +43,7 @@ public class Product {
         this.quantity = quantity;
     }
 
+    //This is the methord that displays the product information
     public void displayInfo(){
         System.out.println("===== Product Information =====");
         System.out.println("  Product ID: " + id);
