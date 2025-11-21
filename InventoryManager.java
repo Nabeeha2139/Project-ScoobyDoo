@@ -4,12 +4,15 @@ public class InventoryManager {
     private int productCount;
     private static final int MAX_PRODUCTS = 50;
 
+    //This methord keeps the number of products in the inventory in check (Max number of product is 50)
     public InventoryManager() {
         products = new Product[MAX_PRODUCTS];
         productCount = 0;
     }
 
+    //This methord adds a new product and checks if the inventory is full
     public void addProduct(Product product) {
+        System.out.println();
         if (productCount < MAX_PRODUCTS) {
             products[productCount] = product;
             productCount++;
@@ -20,12 +23,15 @@ public class InventoryManager {
         }
     }
 
+    //This methord views products and if the inventory is empty
     public void viewProducts() {
+        System.out.println();
         if (productCount == 0) {
             System.out.println("Inventory is empty.");
             return;
         }
 
+    
         System.out.println("===== All Products In Inventory =====");
         for (int i = 0; i < productCount; i++) {
             products[i].displayInfo();
@@ -33,7 +39,9 @@ public class InventoryManager {
         }
     }
 
+    //This methord updates the products (its ID, Price and Quantity)
     public void updateProduct(String productId, double newPrice, int newQuantity) {
+        System.out.println();
         for (int i = 0; i < productCount; i++) {
             if (products[i].getId().equals(productId)) {
                 products[i].setPrice(newPrice);
@@ -45,10 +53,11 @@ public class InventoryManager {
         System.out.println("Product with ID " + productId + " not found.");
     }
 
+    //This methord deletes the product
     public void deleteProduct(String productId) {
+        System.out.println();
         for (int i = 0; i < productCount; i++) {
             if (products[i].getId().equals(productId)) {
-                // Shift elements to remove the product
                 for (int j = i; j < productCount - 1; j++) {
                     products[j] = products[j + 1];
                 }
@@ -61,7 +70,9 @@ public class InventoryManager {
         System.out.println("Product with ID " + productId + " not found.");
     }
 
+    //This methord searches individual products
     public void searchProduct(String productId) {
+        System.out.println();
         for (int i = 0; i < productCount; i++) {
             if (products[i].getId().equals(productId)) {
                 System.out.println("Product found:");
@@ -72,6 +83,7 @@ public class InventoryManager {
         System.out.println("Product with ID " + productId + " not found.");
     }
 
+    //This methord gets the product count
     public int getProductCount() {
         return productCount;
     }
