@@ -9,10 +9,11 @@ public class Main {
         
         int choice;
         do {
+            System.out.println();
             displayMenu();
             System.out.print("Enter your choice: ");
             choice = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
+            scanner.nextLine();
             
             switch (choice) {
                 case 1:
@@ -42,6 +43,7 @@ public class Main {
     }
 
     private static void displayMenu() {
+        System.out.println();
         System.out.println("====== Inventory Management System ======");
         System.out.println("1. Add Product");
         System.out.println("2. View All Products");
@@ -49,9 +51,11 @@ public class Main {
         System.out.println("4. Delete Product");
         System.out.println("5. Search Product by ID");
         System.out.println("6. Exit");
+        System.out.println();
     }
 
     private static void addProduct() {
+        System.out.println();
         System.out.println("----- Add New Product -----");
         
         System.out.print("Enter Product ID: ");
@@ -65,7 +69,7 @@ public class Main {
         
         System.out.print("Enter Quantity: ");
         int quantity = scanner.nextInt();
-        scanner.nextLine(); // Consume newline
+        scanner.nextLine();
         
         System.out.print("Is this a perishable product? (y/n): ");
         String isPerishable = scanner.nextLine();
@@ -83,11 +87,13 @@ public class Main {
     }
 
     private static void viewAllProducts() {
+        System.out.println();
         System.out.println("----- View All Products -----");
         inventory.viewProducts();
     }
 
     private static void updateProduct() {
+        System.out.println();
         System.out.println("----- Update Product -----");
         
         System.out.print("Enter Product ID to update: ");
@@ -98,12 +104,13 @@ public class Main {
         
         System.out.print("Enter new Quantity: ");
         int newQuantity = scanner.nextInt();
-        scanner.nextLine(); // Consume newline
+        scanner.nextLine(); 
         
         inventory.updateProduct(productId, newPrice, newQuantity);
     }
 
     private static void deleteProduct() {
+        System.out.println();
         System.out.println("----- Delete Product -----");
         
         System.out.print("Enter Product ID to delete: ");
@@ -113,6 +120,7 @@ public class Main {
     }
 
     private static void searchProduct() {
+        System.out.println();
         System.out.println("----- Search Product -----");
         
         System.out.print("Enter Product ID to search: ");
