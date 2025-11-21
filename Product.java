@@ -43,7 +43,7 @@ public class Product {
         this.quantity = quantity;
     }
 
-    //This is the methord that displays the product information
+    //This is the method that displays the product information
     public void displayInfo(){
         System.out.println("===== Product Information =====");
         System.out.println("  Product ID: " + id);
@@ -52,3 +52,4 @@ public class Product {
         System.out.println("  Quantity: " + quantity);
     }
 }
+
