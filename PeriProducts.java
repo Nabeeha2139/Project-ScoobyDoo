@@ -1,4 +1,4 @@
-//The PeriProduct class is and extention of the product that takes seprate information for products that are perishiable
+//The PeriProduct class is an extention of the product that takes separate information for products that are perishiable
 public class PeriProducts extends Product {
 
     private String expiryDate;
@@ -8,7 +8,7 @@ public class PeriProducts extends Product {
         this.expiryDate = expiryDate;
     }
     
-    //This methord overides the displayInfo methord in the product class (it adds the expiration date to the product)
+    //This method overrides the displayInfo method in the product class (it adds the expiration date to the product)
     @Override
     public void displayInfo() {
         super.displayInfo(); 
@@ -24,3 +24,4 @@ public class PeriProducts extends Product {
         this.expiryDate = expiryDate;
     }
 }
+
