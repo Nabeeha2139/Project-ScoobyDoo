@@ -6,7 +6,7 @@ public class Main {
     private static InventoryManager inventory = new InventoryManager();
 
     public static void main(String[] args) {
-        System.out.println("Welcome to Inventory Management System!");
+        System.out.println("Welcome to Inventory Management");
         
         int choice;
         do {
@@ -32,7 +32,7 @@ public class Main {
                     searchProduct();
                     break;
                 case 6:
-                    System.out.println("Thank you for using Inventory Management System. Goodbye!");
+                    System.out.println("Thank you for using Inventory Management System");
                     break;
                 default:
                     System.out.println("Error: Please enter a number between 1-6.");
@@ -232,3 +232,4 @@ public class Main {
         }
     }
 }
+
