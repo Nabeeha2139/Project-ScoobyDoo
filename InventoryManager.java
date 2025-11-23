@@ -14,12 +14,19 @@ public class InventoryManager {
     public void addProduct(Product product) {
         System.out.println();
         if (productCount < MAX_PRODUCTS) {
+           
+            for (int i = 0; i < productCount; i++) {
+                if (products[i].getId().equals(product.getId())) {
+                    System.out.println("Error: Product with ID " + product.getId() + " already exists.");
+                    return;
+                }
+            }
+            
             products[productCount] = product;
             productCount++;
-            System.out.println("Product added.");
+            System.out.println("Product added successfully.");
         } else {
-            System.out.println("Inventory is full."); 
-            System.out.println("Cannot add more products.");
+            System.out.println("Error: Inventory is full (Cannot add more products)");
         }
     }
 
@@ -27,14 +34,23 @@ public class InventoryManager {
     public void viewProducts() {
         System.out.println();
         if (productCount == 0) {
-            System.out.println("Inventory is empty.");
+            System.out.println("Error: Inventory is empty");
             return;
         }
 
-    
         System.out.println("===== All Products In Inventory =====");
         for (int i = 0; i < productCount; i++) {
             products[i].displayInfo();
+            
+            // Show expiry warning for perishable products
+            if (products[i] instanceof PeriProducts) {
+                PeriProducts perishable = (PeriProducts) products[i];
+                if (perishable.isExpired()) {
+                    System.out.println("WARNING: This product has EXPIRED");
+                } else if (perishable.getDaysUntilExpiry() <= 7) {
+                    System.out.println("WARNING: This product expires in " + perishable.getDaysUntilExpiry() + " days");
+                }
+            }
             System.out.println();
         }
     }
@@ -50,7 +66,7 @@ public class InventoryManager {
                 return;
             }
         }
-        System.out.println("Product with ID " + productId + " not found.");
+        System.out.println("Error: Product with ID " + productId + " not found.");
     }
 
     //This methord deletes the product
@@ -67,7 +83,7 @@ public class InventoryManager {
                 return;
             }
         }
-        System.out.println("Product with ID " + productId + " not found.");
+        System.out.println("Error: Product with ID " + productId + " not found.");
     }
 
     //This methord searches individual products
@@ -77,10 +93,18 @@ public class InventoryManager {
             if (products[i].getId().equals(productId)) {
                 System.out.println("Product found:");
                 products[i].displayInfo();
+                
+                //This shows expiry info for perishable products
+                if (products[i] instanceof PeriProducts) {
+                    PeriProducts perishable = (PeriProducts) products[i];
+                    if (perishable.isExpired()) {
+                        System.out.println("WARNING: This product has EXPIRED!");
+                    }
+                }
                 return;
             }
         }
-        System.out.println("Product with ID " + productId + " not found.");
+        System.out.println("Error: Product with ID " + productId + " not found.");
     }
 
     //This methord gets the product count
