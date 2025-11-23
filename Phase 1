@@ -1,0 +1,309 @@
+/*
+Main
+import java.util.Scanner;
+
+public class Main {
+    private static Scanner scanner = new Scanner(System.in);
+    private static InventoryManager inventory = new InventoryManager();
+
+    public static void main(String[] args) {
+        System.out.println("Welcome to Inventory Management System!");
+        
+        int choice;
+        do {
+            System.out.println();
+            displayMenu();
+            System.out.print("Enter your choice: ");
+            choice = scanner.nextInt();
+            scanner.nextLine();
+            
+            switch (choice) {
+                case 1:
+                    addProduct();
+                    break;
+                case 2:
+                    viewAllProducts();
+                    break;
+                case 3:
+                    updateProduct();
+                    break;
+                case 4:
+                    deleteProduct();
+                    break;
+                case 5:
+                    searchProduct();
+                    break;
+                case 6:
+                    System.out.println("Thank you for using Inventory Management System. Goodbye!");
+                    break;
+                default:
+                    System.out.println("Invalid choice! Please try again.");
+            }
+        } while (choice != 6);
+        
+        scanner.close();
+    }
+
+    private static void displayMenu() {
+        System.out.println();
+        System.out.println("====== Inventory Management System ======");
+        System.out.println("1. Add Product");
+        System.out.println("2. View All Products");
+        System.out.println("3. Update Product");
+        System.out.println("4. Delete Product");
+        System.out.println("5. Search Product by ID");
+        System.out.println("6. Exit");
+        System.out.println();
+    }
+
+    private static void addProduct() {
+        System.out.println();
+        System.out.println("----- Add New Product -----");
+        
+        System.out.print("Enter Product ID: ");
+        String productId = scanner.nextLine();
+        
+        System.out.print("Enter Product Name: ");
+        String productName = scanner.nextLine();
+        
+        System.out.print("Enter Price: ");
+        double price = scanner.nextDouble();
+        
+        System.out.print("Enter Quantity: ");
+        int quantity = scanner.nextInt();
+        scanner.nextLine();
+        
+        System.out.print("Is this a perishable product? (y/n): ");
+        String isPerishable = scanner.nextLine();
+        
+        if (isPerishable.equalsIgnoreCase("y")) {
+            System.out.print("Enter Expiry Date (YYYY-MM-DD): ");
+            String expiryDate = scanner.nextLine();
+            
+            PeriProducts perishableProduct = new PeriProducts(productId, productName, price, quantity, expiryDate);
+            inventory.addProduct(perishableProduct);
+        } else {
+            Product product = new Product(productId, productName, price, quantity);
+            inventory.addProduct(product);
+        }
+    }
+
+    private static void viewAllProducts() {
+        System.out.println();
+        System.out.println("----- View All Products -----");
+        inventory.viewProducts();
+    }
+
+    private static void updateProduct() {
+        System.out.println();
+        System.out.println("----- Update Product -----");
+        
+        System.out.print("Enter Product ID to update: ");
+        String productId = scanner.nextLine();
+        
+        System.out.print("Enter new Price: ");
+        double newPrice = scanner.nextDouble();
+        
+        System.out.print("Enter new Quantity: ");
+        int newQuantity = scanner.nextInt();
+        scanner.nextLine(); 
+        
+        inventory.updateProduct(productId, newPrice, newQuantity);
+    }
+
+    private static void deleteProduct() {
+        System.out.println();
+        System.out.println("----- Delete Product -----");
+        
+        System.out.print("Enter Product ID to delete: ");
+        String productId = scanner.nextLine();
+        
+        inventory.deleteProduct(productId);
+    }
+
+    private static void searchProduct() {
+        System.out.println();
+        System.out.println("----- Search Product -----");
+        
+        System.out.print("Enter Product ID to search: ");
+        String productId = scanner.nextLine();
+        
+        inventory.searchProduct(productId);
+    }
+}
+
+Products
+public class Product {
+
+    //These are the attributes of the product class
+    private String id;
+    private String name;
+    private double price;
+    private int quantity;
+
+    //This is the Parameterized Constructor for Product class
+    public Product(String id, String name, double price, int quantity){
+
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
+
+    }
+
+    //These are the getters and the setters (for the private attributes)
+    public String getId(){
+        return this.id;
+    }
+    public String getName(){
+        return this.name;
+    }
+    public double getPrice(){
+        return this.price;
+    }
+    public int getQuantity(){
+        return this.quantity;
+    }
+
+    public void setId(String id){
+        this.id = id;
+    }
+    public void setName(String name){
+        this.name = name;
+    }
+    public void setPrice(double price){
+        this.price = price;
+    }
+    public void setQuantity(int quantity){
+        this.quantity = quantity;
+    }
+
+    //This is the method that displays the product information
+    public void displayInfo(){
+        System.out.println("===== Product Information =====");
+        System.out.println("  Product ID: " + id);
+        System.out.println("  Product Name: " + name);
+        System.out.println("  Price: " + price);
+        System.out.println("  Quantity: " + quantity);
+    }
+}
+
+PeriProducts
+//The PeriProduct class is an extention of the product that takes separate information for products that are perishiable
+public class PeriProducts extends Product {
+
+    private String expiryDate;
+    
+    public PeriProducts(String id, String name, double price, int quantity, String expiryDate) {
+        super(id, name, price, quantity);
+        this.expiryDate = expiryDate;
+    }
+    
+    //This method overrides the displayInfo method in the product class (it adds the expiration date to the product)
+    @Override
+    public void displayInfo() {
+        super.displayInfo(); 
+        System.out.println("  Expiry Date: " + expiryDate);
+        System.out.println("  Type: Perishable Product");
+    }
+    
+    //These are the getters and the setters (for the private attributes)
+    public String getExpiryDate() {
+        return expiryDate;
+    }
+    public void setExpiryDate(String expiryDate) {
+        this.expiryDate = expiryDate;
+    }
+}
+
+Inventory Manager
+public class InventoryManager {
+
+    private Product[] products;
+    private int productCount;
+    private static final int MAX_PRODUCTS = 50;
+
+    //This methord keeps the number of products in the inventory in check (Max number of product is 50)
+    public InventoryManager() {
+        products = new Product[MAX_PRODUCTS];
+        productCount = 0;
+    }
+
+    //This methord adds a new product and checks if the inventory is full
+    public void addProduct(Product product) {
+        System.out.println();
+        if (productCount < MAX_PRODUCTS) {
+            products[productCount] = product;
+            productCount++;
+            System.out.println("Product added.");
+        } else {
+            System.out.println("Inventory is full."); 
+            System.out.println("Cannot add more products.");
+        }
+    }
+
+    //This methord views products and if the inventory is empty
+    public void viewProducts() {
+        System.out.println();
+        if (productCount == 0) {
+            System.out.println("Inventory is empty.");
+            return;
+        }
+
+    
+        System.out.println("===== All Products In Inventory =====");
+        for (int i = 0; i < productCount; i++) {
+            products[i].displayInfo();
+            System.out.println();
+        }
+    }
+
+    //This methord updates the products (its ID, Price and Quantity)
+    public void updateProduct(String productId, double newPrice, int newQuantity) {
+        System.out.println();
+        for (int i = 0; i < productCount; i++) {
+            if (products[i].getId().equals(productId)) {
+                products[i].setPrice(newPrice);
+                products[i].setQuantity(newQuantity);
+                System.out.println("Product updated.");
+                return;
+            }
+        }
+        System.out.println("Product with ID " + productId + " not found.");
+    }
+
+    //This methord deletes the product
+    public void deleteProduct(String productId) {
+        System.out.println();
+        for (int i = 0; i < productCount; i++) {
+            if (products[i].getId().equals(productId)) {
+                for (int j = i; j < productCount - 1; j++) {
+                    products[j] = products[j + 1];
+                }
+                products[productCount - 1] = null;
+                productCount--;
+                System.out.println("Product deleted.");
+                return;
+            }
+        }
+        System.out.println("Product with ID " + productId + " not found.");
+    }
+
+    //This methord searches individual products
+    public void searchProduct(String productId) {
+        System.out.println();
+        for (int i = 0; i < productCount; i++) {
+            if (products[i].getId().equals(productId)) {
+                System.out.println("Product found:");
+                products[i].displayInfo();
+                return;
+            }
+        }
+        System.out.println("Product with ID " + productId + " not found.");
+    }
+
+    //This methord gets the product count
+    public int getProductCount() {
+        return productCount;
+    }
+}*/
