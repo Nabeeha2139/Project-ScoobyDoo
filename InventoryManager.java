@@ -4,7 +4,7 @@ public class InventoryManager {
     private int productCount;
     private static final int MAX_PRODUCTS = 50;
 
-    //This methord keeps the number of products in the inventory in check (Max number of product is 50)
+    //This constructor keeps the number of products in the inventory in check (Max number of product is 50)
     public InventoryManager() {
         products = new Product[MAX_PRODUCTS];
         productCount = 0;
@@ -112,3 +112,4 @@ public class InventoryManager {
         return productCount;
     }
 }
+
